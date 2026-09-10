@@ -2,12 +2,14 @@
 name: daily-brief-and-sweep
 description: >
   Runs Dawn Garibaldi's daily morning brief and sweep — her own bespoke system
-  built around her real Outlook calendar and her real ASG business mailbox
-  (d.garibaldi@amplifystrategy.com), NOT a generic HTML-artifact morning-brief
-  skill. Reads today's real calendar events (filtering out Dawn's own
-  timeblocks) and sweeps her mailbox over local IMAP scripts, applies her
-  urgency bar and calibration rules, and writes the result to `handoff.md` for
-  her to route herself. Make sure to use this skill whenever Dawn says things
+  built around her real Outlook calendar, her real ASG business mailbox
+  (d.garibaldi@amplifystrategy.com), and her Granola coaching-session notes,
+  NOT a generic HTML-artifact morning-brief skill. Reads today's real calendar
+  events (filtering out Dawn's own timeblocks), sweeps her mailbox over local
+  IMAP scripts, sweeps today's Granola notes for her own follow-up
+  commitments, applies her urgency bar and calibration rules, and writes the
+  result to `handoff.md` for her to route herself. Make sure to use this
+  skill whenever Dawn says things
   like "run the daily brief and sweep," "run brief and sweep," "brief and
   sweep for today," "run today's brief," or any variant asking for her
   morning brief/sweep — even if she doesn't use these exact words. Do NOT
@@ -52,7 +54,9 @@ If a script errors on missing credentials, tell Dawn to check that file;
 don't try to work around it.
 
 Calendar events come from the already-connected `mcp__outlook-calendar__list_events`
-tool — no script needed there.
+tool — no script needed there. Granola session notes come from the
+already-connected Granola tools (list/get meetings, get transcript) — see
+Step 4.
 
 ---
 
@@ -122,7 +126,34 @@ Intelligence, Zenata, others). Classify forwarded mail by the *original
 sender* in the `From` header, not by the fact that it arrived via
 forwarding.
 
-## Step 4: The urgency bar
+## Step 4: Sweep today's Granola session notes
+
+Call the Granola tools to list meetings and pull today's notes. Any note
+with the **Client Session** template applied (headings like "My
+Follow-ups," "Client Action Items," "Possible Testimonials" — see
+`granola-templates/client-session.md`) is a real coaching session, whether
+or not it showed up on the Outlook calendar in Step 2. When it didn't,
+reconcile it into Step 2's real-events list and flag the calendar gap —
+that's a signal this brief may be missing sessions booked through a
+different channel, worth surfacing every time it happens, not just once.
+
+Pull the **"My Follow-ups"** section into `handoff.md`'s Needs action list
+— these are Dawn's own commitments, and a dated one (e.g. "before she
+leaves for X") satisfies the urgency bar on its own. Leave **"Client Action
+Items"** alone — those belong to the client, not Dawn, and aren't hers to
+action.
+
+**Confidentiality:** never copy "Key Quotes," "Possible Testimonials," or
+"Personal Notes" into `handoff.md` — those stay in the Granola note itself.
+If a testimonial or story-bank-worthy line shows up, mention that it exists
+and point back to the note; don't lift the client's words into a file this
+skill writes to.
+
+If no session happened today, or nothing was captured with the template,
+say so briefly rather than skipping the step silently — an empty sweep is
+still a checked box.
+
+## Step 5: The urgency bar
 
 > An item is "needs action" only if a named human is expecting something from
 > Dawn, or Dawn made a commitment that carries a date.
@@ -138,7 +169,7 @@ Dawn.
 - LinkedIn service alerts, as distinct from a message from an actual human.
 - Funnel-style podcast invitations.
 
-## Step 5: Calibration — the corrections that keep this accurate
+## Step 6: Calibration — the corrections that keep this accurate
 
 - **A reply is not automatically an action.** Read for an unresolved ask; a
   thank-you or confirmation is a closed loop even sitting at the top of the
@@ -164,7 +195,7 @@ Dawn.
   urgency in the subject line, and honoring the keyword there would just
   reopen the noise this system exists to filter out.
 
-## Step 6: Draft replies — text only, inside handoff.md
+## Step 7: Draft replies — text only, inside handoff.md
 
 For anything that clearly warrants a reply, draft the reply text and place
 it in `handoff.md`'s "Drafted replies" section, per `handoff-template.md`'s
@@ -172,7 +203,7 @@ format. **This is plain text for Dawn's review, never a real IMAP draft and
 never sent.** Nothing in this skill has send or draft-creation capability by
 design — that boundary belongs to `email-triage`, a different project.
 
-## Step 7: Write handoff.md
+## Step 8: Write handoff.md
 
 Follow `handoff-template.md`'s exact section structure and order:
 Today's top priority → Hard dates today → Real events today → Needs action
@@ -187,7 +218,7 @@ If nothing actionable came in: say so plainly ("No new actionable emails
 since the last run") rather than padding the file with empty sections, and
 still surface any hard dates or real events from the calendar.
 
-## Step 8: Report back to Dawn
+## Step 9: Report back to Dawn
 
 In the chat, give a short summary: today's top priority, anything in "needs
 action," anything archived from a stale `handoff.md`, and a pointer to
