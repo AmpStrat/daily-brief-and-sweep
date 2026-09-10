@@ -79,7 +79,22 @@ growing forever, never silently overwritten either.
 ## Step 2: Pull today's real calendar
 
 Call `mcp__outlook-calendar__list_events` for today (00:00–24:00, Dawn's
-local time zone).
+local time zone). This tool routinely returns a very large payload (it does
+not filter tightly server-side) that gets written to a file rather than
+shown inline — **read that file in full, in chunks, rather than sampling
+the preview or skimming.** A real event has been missed this way before
+(the tool returned it, but a partial read of the output didn't surface
+it) — if a Granola note in Step 4 turns out to reference a session this
+step didn't find, re-read the calendar file completely before concluding
+it's genuinely missing from the calendar; don't default to "must be booked
+through a different channel."
+
+**A cancellation shows up as its own entry, not a removed one.** A
+canceled meeting can leave two entries in the same time slot: the original
+meeting (unchanged) plus a separate entry literally titled "canceled" with
+no other detail. Treat that pairing as the original event being canceled —
+this resolves what would otherwise look like an ambiguous status, so check
+for it before flagging a session's status as unclear.
 
 **A calendar entry only counts as a real event if at least one of these is
 true:**
@@ -131,11 +146,12 @@ forwarding.
 Call the Granola tools to list meetings and pull today's notes. Any note
 with the **Client Session** template applied (headings like "My
 Follow-ups," "Client Action Items," "Possible Testimonials" — see
-`granola-templates/client-session.md`) is a real coaching session, whether
-or not it showed up on the Outlook calendar in Step 2. When it didn't,
-reconcile it into Step 2's real-events list and flag the calendar gap —
-that's a signal this brief may be missing sessions booked through a
-different channel, worth surfacing every time it happens, not just once.
+`granola-templates/client-session.md`) is a real coaching session. Cross-
+check it against Step 2's real-events list — it should already be there.
+If it genuinely isn't, re-read the full calendar file from Step 2 first
+(see the note there about partial reads); only after that comes up empty
+should you add the session to the real-events list and flag it as booked
+through a channel this brief doesn't check.
 
 Pull the **"My Follow-ups"** section into `handoff.md`'s Needs action list
 — these are Dawn's own commitments, and a dated one (e.g. "before she
