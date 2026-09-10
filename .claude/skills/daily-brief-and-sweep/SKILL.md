@@ -6,8 +6,10 @@ description: >
   (d.garibaldi@amplifystrategy.com), and her Granola coaching-session notes,
   NOT a generic HTML-artifact morning-brief skill. Reads today's real calendar
   events (filtering out Dawn's own timeblocks), sweeps her mailbox over local
-  IMAP scripts, sweeps today's Granola notes for her own follow-up
-  commitments, applies her urgency bar and calibration rules, and writes the
+  IMAP scripts, sweeps Granola notes captured since the last run (typically
+  yesterday's sessions, since a 7 AM run has no same-day calls to sweep yet)
+  for her own follow-up commitments, applies her urgency bar and calibration
+  rules, and writes the
   result to `handoff.md` for her to route herself. Make sure to use this
   skill whenever Dawn says things
   like "run the daily brief and sweep," "run brief and sweep," "brief and
@@ -141,17 +143,29 @@ Intelligence, Zenata, others). Classify forwarded mail by the *original
 sender* in the `From` header, not by the fact that it arrived via
 forwarding.
 
-## Step 4: Sweep today's Granola session notes
+## Step 4: Sweep recent Granola session notes
 
-Call the Granola tools to list meetings and pull today's notes. Any note
-with the **Client Session** template applied (headings like "My
+**This is a "since the last run" sweep, not a "today" sweep** — if the
+brief runs at 7 AM, no client call has happened yet today, so "today's
+notes" would always be empty. The sessions worth sweeping are the ones
+captured since the last time this brief ran, which on a normal daily
+cadence means yesterday's calls. Use the date from the handoff being
+archived in Step 1 as the window start (if there was nothing to archive,
+or the skill is running for the first time, default to the last 48 hours).
+Pull Granola meetings and notes from that window through now — that
+correctly catches both a normal previous-day session and an early-morning
+call today that happened before this brief ran.
+
+Any note with the **Client Session** template applied (headings like "My
 Follow-ups," "Client Action Items," "Possible Testimonials" — see
-`granola-templates/client-session.md`) is a real coaching session. Cross-
-check it against Step 2's real-events list — it should already be there.
-If it genuinely isn't, re-read the full calendar file from Step 2 first
-(see the note there about partial reads); only after that comes up empty
-should you add the session to the real-events list and flag it as booked
-through a channel this brief doesn't check.
+`granola-templates/client-session.md`) is a real coaching session. If one
+in this window falls on *today's* date specifically, cross-check it
+against Step 2's real-events list — it should already be there. If it
+genuinely isn't, re-read the full calendar file from Step 2 first (see the
+note there about partial reads); only after that comes up empty should you
+add the session to today's real-events list and flag it as booked through
+a channel this brief doesn't check. A session from a prior day naturally
+won't be on today's calendar — that's expected, not a gap to flag.
 
 Pull the **"My Follow-ups"** section into `handoff.md`'s Needs action list
 — these are Dawn's own commitments, and a dated one (e.g. "before she
